@@ -26,11 +26,10 @@ class FAP(SDetection):
 
         # # predict top-k user as spammer
         self.k = int(self.config['topKSpam'])
-        # 0.5 is the ratio of spammer to dataset, it can be changed according to different datasets
-        kThreshold = int(0.5 * (len(self.dao.user) - self.s))
-        if self.k > kThreshold:
-            self.k = kThreshold
-            print '*** the number of top-K users is more than threshold value, so it is set to', kThreshold, '***'
+        kThreshlod = int(0.1 * (len(self.dao.user) - self.s))
+        if self.k > kThreshlod:
+            self.k = kThreshlod
+            print '*** the number of top-K users is more than threshlod value, so it is set to', kThreshlod, '***'
     # product transition probability matrix self.TPUI and self.TPIU
 
     def __computeTProbability(self):
@@ -105,7 +104,7 @@ class FAP(SDetection):
         m, n, tmp = self.dao.trainingSize()
         PUser = np.zeros(m)
         PItem = np.zeros(n)
-        self.testLabels = [0 for i in range(m)]
+        self.trueLabels = [0 for i in range(m)]
         self.predLabels = [0 for i in range(m)]
 
         # preserve seedUser Index
@@ -168,7 +167,7 @@ class FAP(SDetection):
         for user in self.dao.trainingSet_u:
             userInd = self.dao.user[user]
             # print type(user), user, userInd
-            self.testLabels[userInd] = int(self.labels[user])
+            self.trueLabels[userInd] = int(self.labels[user])
 
         # delete seedUser labels
         differ = 0
@@ -176,7 +175,9 @@ class FAP(SDetection):
             user = int(user - differ)
             # print type(user)
             del self.predLabels[user]
-            del self.testLabels[user]
+            del self.trueLabels[user]
             differ += 1
 
-        return self.predLabels
+        print classification_report(self.trueLabels, self.predLabels, digits=4)
+        print metrics.confusion_matrix(self.trueLabels, self.predLabels)
+        return classification_report(self.trueLabels, self.predLabels, digits=4)

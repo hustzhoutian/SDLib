@@ -1,8 +1,7 @@
-<img src="http://upload.ouliu.net/i/20171229203635lwns3.png" width="250" height="75" />
-
+![SDLib](http://i2.muimg.com/1949/a23f0509950f23f1.png)
+</br>
 **Founder**: [@Coder-Yu ](https://github.com/Coder-Yu)</br>
-**Main Contributors**: [@somnussyq](https://github.com/somnussyq) [@hustzhoutian](https://github.com/hustzhoutian) [@DouTong](https://github.com/DouTong)<br>
-**Code Reviewer**: [@mingaoo](https://github.com/mingaoo)<br>
+**Main Contributors**: [@somnussyq](https://github.comsomnussyq) [@hustzhoutian](https://github.com/hustzhoutian)<br>
 SDLib: A Python library used to collect shilling detection methods. (for academic research)
 <h2>How to Run it</h2>
 <ul>
@@ -120,11 +119,6 @@ SDLib: A Python library used to collect shilling detection methods. (for academi
     <td>0.001</td>
     <td>The ratio of the selected items to all items </td>
  </tr>
-  <tr>
-    <td>linkSize</td>
-    <td>0.01</td>
-    <td>The ratio of the users maliciously linked by a spammer to all user </td>
- </tr>
    <tr>
     <td>targetCount</td>
     <td>20</td>
@@ -173,7 +167,7 @@ SDLib: A Python library used to collect shilling detection methods. (for academi
 
   <tr>
 	<td scope="row">DegreeSAD</td>
-    <td> Wentao Li and Min Gao, Shilling Attack Detection in Recommender Systems via Selecting Patterns Analysis,IEICE Transactions on Information and System (2016)<br></td>
+    <td>李文涛，等，一种基于流行度分类特征的托攻击检测算法， 自动化学报 (2015)<br></td>
   </tr>
     <tr>
 	<td scope="row">PCASelectUsers</td>
@@ -186,10 +180,6 @@ SDLib: A Python library used to collect shilling detection methods. (for academi
   <tr>
 	<td scope="row">FAP</td>
     <td>Zhang, Yongfeng, et al. "Catch the Black Sheep: Unified Framework for Shilling Attack Detection Based on Fraudulent Action Propagation." IJCAI (2015)<br></td>
-  </tr>
-   <tr>
-	<td scope="row">CoDetector</td>
-    <td>Tong Dou, Junliang Yu et al. "Collaborative Shilling Detection bridging Factorization and User Embedding." COLLABORATECOM (2017)<br></td>
   </tr>
   </table>
 </div>

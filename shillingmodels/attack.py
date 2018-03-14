@@ -18,8 +18,6 @@ class Attack(object):
         self.threshold = float(self.config['threshold'])
         self.minCount = int(self.config['minCount'])
         self.maxCount = int(self.config['maxCount'])
-        self.minScore = float(self.config['minScore'])
-        self.maxScore = float(self.config['maxScore'])
         self.outputDir = self.config['outputDir']
         if not os.path.exists(self.outputDir):
             os.makedirs(self.outputDir)
@@ -32,7 +30,6 @@ class Attack(object):
         self.itemAverage = {}
         self.getAverageRating()
         self.selectTarget()
-        self.startUserID = 0
 
     # def selectTarget(count = 20):
     #     pass
@@ -69,7 +66,7 @@ class Attack(object):
         markedItems = np.random.randint(len(self.itemProfile), size=markedItemsCount)
         return markedItems.tolist()
 
-    def insertSpam(self,startID=0):
+    def insertSpam(self):
         pass
 
     def loadTarget(self,filename):

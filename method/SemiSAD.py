@@ -192,6 +192,10 @@ class SemiSAD(SDetection):
                 print 'testData Done 100%...'
 
         # preparing examples training for LabledData ,test for UnLableData
+        self.training = []
+        self.trainingLabels = []
+        self.test = []
+        self.testLabels = []
 
         for user in self.dao.trainingSet_u:
             self.training.append([self.H[user], self.DegSim[user], self.LengVar[user],self.RDMA[user],self.FMTD[user]])
@@ -210,8 +214,6 @@ class SemiSAD(SDetection):
             #pred_labelsForTrainingUn = classifier.predict(X_test)
             print 'Enhanced classifier...'
             while 1:
-                if len(X_test)<=5: # min
-                    break         #min
                 proba_labelsForTrainingUn = classifier.predict_proba(X_test)
                 X_test_labels = np.hstack((X_test, proba_labelsForTrainingUn))
                 X_test_labels0_sort = sorted(X_test_labels,key=lambda x:x[5],reverse=True)
@@ -221,15 +223,11 @@ class SemiSAD(SDetection):
                     classifier.partial_fit(b, ['0','0','0','0','0'], classes=['0', '1'],sample_weight=np.ones(len(b), dtype=np.float) * self.Lambda)
                     X_test_labels = X_test_labels0_sort[5:]
                     X_test = a[5:]
-                if len(X_test)<6: # min
-                    break         #min
-
-                X_test_labels0_sort = sorted(X_test_labels, key=lambda x: x[5], reverse=True)
-                if X_test_labels0_sort[4][5]<=X_test_labels0_sort[4][6]: #min
+                X_test_labels0_sort = sorted(X_test_labels, key=lambda x: x[6], reverse=True)
+                if X_test_labels0_sort[4][5]<X_test_labels0_sort[4][6]:
                     a = map(lambda x: x[:5], X_test_labels0_sort)
                     b = a[0:5]
                     classifier.partial_fit(b, ['1', '1', '1', '1', '1'], classes=['0', '1'],sample_weight=np.ones(len(b), dtype=np.float) * 1)
-                    X_test_labels = X_test_labels0_sort[5:]  # min
                     X_test = a[5:]
                 if len(X_test)<6:
                     break
@@ -248,4 +246,5 @@ class SemiSAD(SDetection):
             #         break
             pred_labels = classifier.predict(self.test)
             print 'naive_bayes with EM algorithm:'
-            return pred_labels
+            print classification_report(self.testLabels, pred_labels, digits=4)
+            return classification_report(self.testLabels, pred_labels, digits=4)
