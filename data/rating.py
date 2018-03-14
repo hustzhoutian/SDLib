@@ -65,18 +65,19 @@ class RatingDAO(object):
                 if not self.item.has_key(item):
                     self.item[item] = len(self.item)
                     self.id2item[self.item[item]] = item
-
+                self.trainingSet_i[item][user] = self.trainingData[user][item]
                 # userList.append
         #     triple.append([self.user[userName], self.item[itemName], rating])
         # self.trainingMatrix = new_sparseMatrix.SparseMatrix(triple)
 
         self.all_User.update(self.user)
         self.all_Item.update(self.item)
+
         for i, user in enumerate(self.testData):
+            # order the user
+            if not self.user.has_key(user):
+                self.all_User[user] = len(self.all_User)
             for item in self.testData[user]:
-                # order the user
-                if not self.user.has_key(user):
-                    self.all_User[user] = len(self.all_User)
                 # order the item
                 if not self.item.has_key(item):
                     self.all_Item[item] = len(self.all_Item)
@@ -167,6 +168,11 @@ class RatingDAO(object):
         'whether item is in training set'
         return self.trainingSet_i.has_key(i)
 
+    def allUserRated(self, u):
+        if u in self.user:
+            return self.trainingSet_u[u].keys(), self.trainingSet_u[u].values()
+        else:
+            return self.testSet_u[u].keys(), self.testSet_u[u].values()
     # def userRated(self,u):
     #     if self.trainingMatrix.matrix_User.has_key(self.getUserId(u)):
     #         itemIndex =  self.trainingMatrix.matrix_User[self.user[u]].keys()
